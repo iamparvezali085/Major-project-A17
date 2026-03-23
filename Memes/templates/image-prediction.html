@@ -1,0 +1,175 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Prediction Page</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+body {
+    font-family: Arial, sans-serif;
+    overflow-x:hidden;
+    background-image: url("{% static 'images/back.jpeg' %}");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+header{
+    width:100%;
+    background-color: antiquewhite;
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:1000;
+    box-shadow:0 2px 5px rgba(0,0,0,0.1);
+}
+.header-container{
+    max-width:1400px;
+    height:4rem;
+    margin:auto;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:0 1rem;
+}
+#heading h1{
+    margin:0;
+    white-space:nowrap;
+}
+#component{
+    display:flex;
+    gap:1.5rem;
+    align-items:center;
+}
+#component a{
+    text-decoration:none;
+    color:black;
+    font-weight:bold;
+    white-space:nowrap;
+}
+main{
+    min-height:100vh;
+    padding-top:6rem;
+    padding-bottom:4rem;
+}
+
+.banner {
+    display:block;
+    width:85%;
+    height:300px;
+    margin:2rem auto;
+ 
+}
+h2{
+    text-align:center;
+}
+form{
+    text-align:center;
+    margin-top:2rem;
+}
+#file {
+    width: 40%;
+    min-width: 15rem;
+    max-width: 20rem;
+    cursor: pointer;
+    color: white;
+    background-color: rgb(218, 92, 237);
+    padding: 0.6rem;
+    border-radius: 5px;
+    border: none;
+}
+button{
+    padding:0.6rem 3rem;
+    cursor:pointer;
+    font-weight:bold;
+    border-radius:20px;
+}
+.preview-img{
+    width:700px;
+    height:400px;
+    max-width:95%;
+    border:2px solid black;
+    border-radius:10px;
+}
+footer{
+    background-color: antiquewhite;
+    text-align:center;
+    padding:0.5rem;
+    position:fixed;
+    bottom:0;
+    width:100%;
+}
+@media(max-width:900px){
+    .header-container{
+        flex-direction:column;
+        height:auto;
+        padding:0.7rem 0;
+    }
+
+    #component{
+        margin-top:0.4rem;
+    }
+
+    .banner{
+        width:95%;
+        height:auto;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="header-container">
+        <div id="heading">
+            <h1>Hate Speech in Memes</h1>
+        </div>
+
+        <div id="component">
+            <a href="/">Home</a>
+              <a href="{% url 'prediction' %}">Text Prediction</a>
+            <a href="{% url 'login' %}">Logout</a>
+        </div>
+    </div>
+</header>
+
+<main>
+
+    <h2>Welcome to Image Prediction Page</h2>
+
+    <img src="{% static 'images/hate speech1.jpeg' %}" class="banner"/>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="image" accept="image/*" id="file" required><br><br>
+        <button type="submit">Predict</button>
+    </form>
+
+    {% if prediction_output %}
+        <h3 style="text-align:center; margin-top:2rem;">Uploaded Image: {{ uploaded_filename }}</h3>
+
+        <h2 style="text-align:center; margin-top:1rem;">
+            <span style="background-color: antiquewhite; padding:0.3rem 0.8rem;">
+                Prediction Output: {{ prediction_output }}
+            </span>
+        </h2>
+    {% endif %}
+
+    {% if image_url %}
+    <div style="text-align:center; margin-top:20px;">
+        <h3>Uploaded Image Preview:</h3>
+        <img src="{{ image_url }}" class="preview-img">
+    </div>
+    {% endif %}
+
+</main>
+
+</body>
+</html>

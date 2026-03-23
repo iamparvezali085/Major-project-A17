@@ -1,0 +1,135 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+
+<style>
+*{ margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+}
+header{
+    width:100%;
+     background-color: antiquewhite;
+    color:black;
+}
+.header-container{
+    max-width: 1400px;     
+    margin: 0 auto;
+    height:4rem;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 1rem;
+}
+
+#heading h1 {
+    margin:0;
+    white-space: nowrap; 
+}
+
+#component{
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    flex-wrap: nowrap;    
+}
+
+#component a{
+    text-decoration:none;
+    color:black;
+    font-weight:bold;
+    font-size:1rem;
+    white-space: nowrap;
+}
+main{
+   min-height: 100vh;
+   background-image: url("{% static 'images/back.jpeg' %}");
+   background-position: center;
+   background-repeat: no-repeat;
+   background-size: 100% 100%;
+   background-attachment: fixed; 
+   padding-top: 3rem;
+}
+
+img {
+    display: block;
+    width: 85%;
+    height: 300px;
+    margin: auto;
+}
+
+#main-head{
+    margin-top: 4rem;
+    text-align: center;
+}
+footer {
+     background-color: antiquewhite;
+    color: black;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    padding: 6px 0;
+}
+@media (max-width: 900px) {
+
+    .header-container{
+        flex-direction: column;
+        height:auto;
+        padding:1rem 0;
+    }
+
+    #component {
+        margin-top: 0.4rem;
+    }
+
+    img {
+        width: 95%;
+        height: auto;
+    }
+
+    #main-head {
+        margin-top: 2rem;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="header-container">
+        <div id="heading">
+             <h1>Hate Speech in Memes</h1>
+        </div>
+
+        <div id="component">
+            <a href="/">Home</a>
+            <a href="{% url 'register' %}">Register</a>
+            <a href="{% url 'login' %}">Login</a>
+        </div>
+    </div>
+</header>
+
+<main>
+
+    <img src="{% static 'images/hate speech1.jpeg' %}" />
+
+    <div id="main-head">
+        <h2>
+            <span style="background-color: antiquewhite;">Welcome to Home Page</span>
+        </h2>
+    </div>
+</main>
+
+</body>
+</html>

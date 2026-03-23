@@ -1,0 +1,213 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Page</title>
+
+<style>
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: Arial, sans-serif;
+    overflow-x:hidden;  
+    overflow-y: auto;
+    background-image: url("{% static 'images/back.jpeg' %}");
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+    position: relative;
+}
+header{
+    width:100%;
+    background-color: antiquewhite;
+    color:black;
+     position:fixed;
+    top:0;
+    z-index: 10;
+
+}
+.header-container{
+    max-width:1400px;
+    height:4rem;
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 1rem;
+}
+#heading h1{
+    margin:0;
+    white-space: nowrap;
+}
+#component{
+    display:flex;
+    gap:1.5rem;
+    white-space: nowrap;
+}
+#component a{
+    text-decoration:none;
+    color:black;
+    font-weight:bold;
+}
+main{
+    min-height: 100vh;
+    padding-top: 3rem;
+    padding-bottom: 4rem;
+}
+h2{
+    padding-top: 3rem;
+    text-align:center;
+}
+img{
+    display:block;
+    width:85%;
+    height:300px;
+    margin:2rem auto;
+}
+form{
+    text-align:center;
+    margin-top:2rem;
+}
+#file {
+    width: 40%;
+    min-width: 15rem;
+    max-width: 20rem;
+    cursor: pointer;
+    color: white;
+    background-color: rgb(114, 28, 153);
+    padding: 0.6rem;
+    border-radius: 5px;
+    border: none;
+}
+button{
+    padding:0.6rem 3rem;
+    cursor:pointer;
+    font-weight:bold;
+    border:none;
+    border-radius:20px;
+}
+span{
+    background-color: rgb(161, 19, 218);
+    padding: 0.2rem 0.6rem;
+    color:aliceblue;
+}
+.table-wrapper {
+    width: 85%;
+    margin: 2rem auto;
+    max-height: 60vh;
+    overflow-y: auto;
+    background:white;
+    border: 1px solid #ddd;
+    padding: 10px;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align:center;
+    word-break: break-word;
+}
+
+th {
+    background-color: #f2f2f2;
+    position: sticky;
+    top:0;
+}
+td:nth-child(1), th:nth-child(1){
+    width:5%;
+}
+td:nth-child(3), th:nth-child(3){
+    width:15%;
+}
+footer{
+    background-color: antiquewhite;
+    padding:0.5rem;
+    position:fixed;
+    bottom:0;
+    width:100%;
+    text-align:center;
+}
+@media(max-width:900px){
+    .header-container{
+        flex-direction:column;
+        height:auto;
+        padding:0.7rem 0;
+    }
+
+    #component{
+        margin-top:0.5rem;
+    }
+
+    img{
+        width:95%;
+        height:auto;
+    }
+
+    #file{
+        width:15rem;
+    }
+
+    .table-wrapper{
+        width:95%;
+    }
+}
+</style>
+
+</head>
+<body>
+
+<header>
+    <div class="header-container">
+        <div id="heading">
+            <h1>Hate Speech in Memes</h1>
+        </div>
+
+        <div id="component">
+            <a href="/">Home</a>
+             <a href="{% url 'image-prediction' %}">Image Prediction</a>
+            <a href="{% url 'login' %}">Logout</a>
+        </div>
+    </div>
+</header>
+
+
+<main>
+
+    <h2>Welcome to Text Prediction Page</h2>
+
+    <img src="{% static 'images/hate speech1.jpeg' %}" alt="banner"/>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="file" id="file" accept=".csv" required/><br><br>
+        <button type="submit">Submit</button>
+    </form>
+
+    {% if messages %}
+    <div style="text-align:center; margin-top:1rem;">
+        {% for message in messages %}
+            <p><strong><span>{{ message }}</span></strong></p>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if prediction_table %}
+        <h3 style="text-align:center; margin-top:2rem;">File Prediction</h3>
+        <div class="table-wrapper">
+            {{ prediction_table|safe }}
+        </div>
+    {% endif %}
+
+</main>
+
+</body>
+</html>
